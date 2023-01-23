@@ -1,4 +1,4 @@
-# GLP APR Projection
+# GLP Rewards Forecaster
 
 Webpage to forecast the APR for GLP on Avalanche in the upcoming week:
 https://yy-analytics.github.io/glp-rewards-forecaster
