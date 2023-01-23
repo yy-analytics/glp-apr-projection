@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/glp-apr-projection/static/css/main.e6c13ad2.css",
+    "main.js": "/glp-apr-projection/static/js/main.172899f7.js",
+    "static/js/787.2bbe3b88.chunk.js": "/glp-apr-projection/static/js/787.2bbe3b88.chunk.js",
+    "index.html": "/glp-apr-projection/index.html",
+    "main.e6c13ad2.css.map": "/glp-apr-projection/static/css/main.e6c13ad2.css.map",
+    "main.172899f7.js.map": "/glp-apr-projection/static/js/main.172899f7.js.map",
+    "787.2bbe3b88.chunk.js.map": "/glp-apr-projection/static/js/787.2bbe3b88.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.172899f7.js"
+  ]
+}
