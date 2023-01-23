@@ -52,6 +52,9 @@ function App() {
             <Typography variant="caption">
               A <Link href="https://yieldyak.com/">Yield Yak</Link> community product
             </Typography>
+            <Typography variant="caption">
+              All stats shown are for the Avalanche network
+            </Typography>
           </Grid>
           <Grid item xs={12}>
             <Button variant="contained" onClick={handleRefreshStats}>
