@@ -52,9 +52,6 @@ function App() {
             <Typography variant="caption">
               A <Link href="https://yieldyak.com/">Yield Yak</Link> community product
             </Typography>
-            <Typography variant="caption">
-              All stats shown are for the Avalanche network
-            </Typography>
           </Grid>
           <Grid item xs={12}>
             <Button variant="contained" onClick={handleRefreshStats}>
@@ -76,6 +73,11 @@ function App() {
             <Divider color="green" />
             <InfoLine label="Fees since last reset" value={currencyRounded(glpStats.feesSince) || "loading..."} />
             <InfoLine color="primary" label="Forecasted APR" value={percentageFormat(glpStats.forecastedAPR) || "loading..."} />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="caption">
+              * All stats shown are for GLP on the Avalanche network
+            </Typography>
           </Grid>
         </Grid>
       </Container >
