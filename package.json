@@ -1,7 +1,7 @@
 {
   "name": "glp-apr-projection",
   "version": "0.1.0",
-  "homepage": "https://yy-analytics.github.io/glp-apr-projection",
+  "homepage": "https://yy-analytics.github.io/glp-rewards-forecaster",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",

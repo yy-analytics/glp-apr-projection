@@ -42,7 +42,7 @@ export const getGLPStats = async () => {
     // To calculate the APR, we make use of the fact that 70% of the previous week's fees go towards the rewards.
     const currentAPR = 0.7 * previousFeesSince * 365 / (7 * glpTVL);
     const forecastedAPR = 0.7 * feesSince * 86400 * 365 / ((currentTimestamp - mostRecentWednesday) * glpTVL);
-    return { currentTimestamp: new Date(currentTimestamp * 1000).toLocaleString(), glpTVL, feesSince, previousFeesSince, currentAPR, forecastedAPR };
+    return { currentTimestamp: new Date(currentTimestamp * 1000).toLocaleString(), lastReset: new Date(mostRecentWednesday * 1000).toUTCString(), glpTVL, feesSince, previousFeesSince, currentAPR, forecastedAPR };
 };
 
 export const currencyRounded = (v, delta = false) => {

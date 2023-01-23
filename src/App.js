@@ -7,6 +7,23 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { currencyRounded, getGLPStats, percentageFormat } from './utils';
 
+const InfoLine = (props) => {
+  return (
+    <Grid container>
+      <Grid item xs={8} sm={7} md={5} lg={4} xl={3}>
+        <Typography variant="h6">
+          {props.label}
+        </Typography>
+      </Grid>
+      <Grid item xs={4} sm={5} md={7} lg={8} xl={9}>
+        <Typography variant="h6" color={props.color}>
+          {props.value}
+        </Typography>
+      </Grid>
+    </Grid>
+  )
+};
+
 function App() {
   const [glpStats, setGLPStats] = React.useState({});
 
@@ -30,7 +47,7 @@ function App() {
         <Grid container alignItems="center" spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h3">
-              APR projection for GLP pool on Avalanche
+              GLP Rewards Forecaster
             </Typography>
             <Typography variant="caption">
               A <Link href="https://yieldyak.com/">Yield Yak</Link> community product
@@ -42,27 +59,20 @@ function App() {
             </Button>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h6">
-              From GMX dashboard as of : {glpStats.currentTimestamp || "loading..."}
+            <Typography variant="body2">
+              Last updated: {glpStats.currentTimestamp || "loading..."}
             </Typography>
-            <Divider color="green"/>
-            <Typography variant="h6">
-              Current GLP Pool TVL = {currencyRounded(glpStats.glpTVL) || "loading..."}
+            <Typography variant="body2">
+              Last rewards reset: {glpStats.lastReset || "loading..."}
             </Typography>
-            <Divider color="green"/>
-            <Typography variant="h6">
-              Fees in 7 days prior to last reset = {currencyRounded(glpStats.previousFeesSince) || "loading..."}
-            </Typography>
-            <Typography variant="h6">
-              Current APR (based on 70% of fees) = {percentageFormat(glpStats.currentAPR) || "loading..."}
-            </Typography>
-            <Divider color="green"/>
-            <Typography variant="h6">
-              Fees since last reset = {currencyRounded(glpStats.feesSince) || "loading..."}
-            </Typography>
-            <Typography variant="h6">
-              Forecasted APR (based on 70% of fees) = {percentageFormat(glpStats.forecastedAPR) || "loading..."}
-            </Typography>
+            <Divider color="green" />
+            <InfoLine label="Current GLP Pool TVL" value={currencyRounded(glpStats.glpTVL) || "loading..."} />
+            <Divider color="green" />
+            <InfoLine label="Fees in 7 days prior to last reset" value={currencyRounded(glpStats.previousFeesSince) || "loading..."} />
+            <InfoLine label="Current APR" value={percentageFormat(glpStats.currentAPR) || "loading..."} />
+            <Divider color="green" />
+            <InfoLine label="Fees since last reset" value={currencyRounded(glpStats.feesSince) || "loading..."} />
+            <InfoLine color="primary" label="Forecasted APR" value={percentageFormat(glpStats.forecastedAPR) || "loading..."} />
           </Grid>
         </Grid>
       </Container >
