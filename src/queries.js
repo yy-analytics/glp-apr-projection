@@ -6,7 +6,7 @@ query {
         timestamp
         aumInUsdg
     }
-    feeStats(first: 14, orderBy: timestamp, orderDirection: desc) {
+    feeStats(first: 77, orderBy: timestamp, orderDirection: desc) {
         swap
         marginAndLiquidation
         mint

@@ -5,6 +5,7 @@ import { Button, CssBaseline, Divider, Link } from '@mui/material';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import { ResponsiveContainer, BarChart, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
 import { currencyRounded, getGLPStats, percentageFormat } from './utils';
 
 const InfoLine = (props) => {
@@ -36,6 +37,8 @@ function App() {
     const newGLPStats = await getGLPStats();
     setGLPStats(newGLPStats);
   };
+
+  const timestampToDate = timestamp => new Date(1000 * timestamp).toISOString().slice(0, 10);
 
   return (
     <ThemeProvider theme={theme}>
@@ -72,12 +75,48 @@ function App() {
             <InfoLine label="Current APR" value={percentageFormat(glpStats.currentAPR) || "loading..."} />
             <Divider color="green" />
             <InfoLine label="Fees since last reset" value={currencyRounded(glpStats.feesSince) || "loading..."} />
-            <InfoLine color="primary" label="Forecasted APR" value={percentageFormat(glpStats.forecastedAPR) || "loading..."} />
+            <InfoLine color="primary" label="Forecasted APR (basic)" value={percentageFormat(glpStats.forecastedAPR) || "loading..."} />
+            <InfoLine color="primary" label="Forecasted APR (weighted)" value={percentageFormat(glpStats.altForecastedAPR) || "loading..."} />
           </Grid>
           <Grid item xs={12}>
             <Typography variant="caption">
               * All stats shown are for GLP on the Avalanche network
             </Typography>
+          </Grid>
+          <Grid item xs={12} lg={6}>
+            <Typography variant="h6">
+              Average spread of fees over the last 10 weeks (anomalies excluded)
+            </Typography>
+            <BarChart
+              width={600}
+              height={300}
+              data={glpStats.weightingChart}
+              margin={{ top: 10, right: 40, left: 5, bottom: 5 }}
+            >
+              <XAxis dataKey="day" interval={0} style={{ fontSize: "0.8rem" }} />
+              <YAxis tickFormatter={v => percentageFormat(v)}/>
+              <Tooltip formatter={v => percentageFormat(v)} contentStyle={{ backgroundColor: theme.palette.background.default, opacity: 0.75 }} labelStyle={{ color: theme.palette.text.main }}/>
+              <Legend />
+              <Bar dataKey="% of fees" fill={theme.palette.primary.main} />
+            </BarChart>
+          </Grid>
+          <Grid item xs={12} lg={6}>
+            <Typography variant="h6">
+              Forecasted fees (weighted) for the rest of this week
+            </Typography>
+            <BarChart
+              width={600}
+              height={300}
+              data={glpStats.feesChart}
+              margin={{ top: 10, right: 40, left: 5, bottom: 5 }}
+            >
+              <XAxis dataKey="timestamp" interval={0} tickFormatter={timestampToDate} style={{ fontSize: "0.8rem" }} />
+              <YAxis tickFormatter={v => currencyRounded(v)}/>
+              <Tooltip formatter={v => currencyRounded(v)} labelFormatter={timestampToDate} contentStyle={{ backgroundColor: theme.palette.background.default, opacity: 0.75 }} labelStyle={{ color: theme.palette.text.main }}/>
+              <Legend />
+              <Bar dataKey="actual" stackId="a" fill={theme.palette.primary.main} />
+              <Bar dataKey="forecast" stackId="a" fill={theme.palette.info.main} />
+            </BarChart>
           </Grid>
         </Grid>
       </Container >
