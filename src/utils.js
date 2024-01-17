@@ -71,13 +71,19 @@ export const getGLPStats = async () => {
     // We get our currentWeekFeesAndTimestamps that we will use our dailyPercentageAverages on.
     const currentWeekFeesAndTimestamps = feesAndTimestamps.filter(({ weekNumber }) => weekNumber === 11);
     // Basic linear extrapolation for the latest day.
+    // But if it's already more than 5x previous average then we don't fully extrapolate.
+    // Here we calculate the previous average fee
+    const weeklyFeesForAverage = Object.keys(weeklyTotals).filter(key => !excludeWeeks.includes(key)).map(key => weeklyTotals[key]);
+    const previousAverageFee = weeklyFeesForAverage.reduce((a, b) => a + b, 0) / (7 * weeklyFeesForAverage.length);
+    // And now we forecast for the rest of the current day.
     let forecastedCurrentWeekFeesAndTimestamps = currentWeekFeesAndTimestamps.map(
-        ft => ({ ...ft, summedFees: currentTimestamp - ft.timestamp >= 86400 ? ft.summedFees : ft.summedFees * (86400 / (currentTimestamp % 86400)) })
+        ft => ({ ...ft, summedFees: currentTimestamp - ft.timestamp >= 86400 ? ft.summedFees : (ft.summedFees > 5 * previousAverageFee ? ft.summedFees + previousAverageFee * 7 * dailyPercentageAverages[ft.dayOfWeek] * (1 - (currentTimestamp % 86400) / 86400) : ft.summedFees * (86400 / (currentTimestamp % 86400))) })
     );
     // For the other remaining days, we do something a little more complicated.
     // First we filter out any days which are 5 times bigger than the second biggest day (i.e. one-off big spike days) as they will mess up the forecast.
     // Then, from those remaining, we sum their fees, and used our dailyPercentageAverages to calculate how much we expect to be remaining for the rest of the week.
-    const secondBiggestFee = forecastedCurrentWeekFeesAndTimestamps.map(ft => ft.summedFees).sort((a, b) => b - a)[1];
+    // In the case that it's the first day of the week, we use the previous weekly average (excluding anomaly weeks) divided by 7 (so that it's daily) as the "second biggest".
+    const secondBiggestFee = forecastedCurrentWeekFeesAndTimestamps.map(ft => ft.summedFees).sort((a, b) => b - a)[1] || previousAverageFee;
     const aggregationsForForecast = forecastedCurrentWeekFeesAndTimestamps.filter(({ summedFees }) => !(summedFees > 5 * secondBiggestFee)).reduce(
         (res, row) => {
             res.summedFees += row.summedFees;
@@ -85,7 +91,7 @@ export const getGLPStats = async () => {
             return res;
         }, { summedFees: 0, summedPercentages: 0 }
     );
-    const feePerPercentage = aggregationsForForecast.summedFees / aggregationsForForecast.summedPercentages;
+    const feePerPercentage = (aggregationsForForecast.summedFees || previousAverageFee * 7) / (aggregationsForForecast.summedPercentages || 1);
     forecastedCurrentWeekFeesAndTimestamps = [1, 2, 3, 4, 5, 6, 7].map(day => {
         const currentInfo = forecastedCurrentWeekFeesAndTimestamps.find(ft => ft.dayOfWeek === day);
         if (currentInfo) {
