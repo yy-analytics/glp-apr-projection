@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/glp-rewards-forecaster/static/css/main.e6c13ad2.css",
-    "main.js": "/glp-rewards-forecaster/static/js/main.c3db3a17.js",
+    "main.js": "/glp-rewards-forecaster/static/js/main.89d0b5c4.js",
     "static/js/787.2bbe3b88.chunk.js": "/glp-rewards-forecaster/static/js/787.2bbe3b88.chunk.js",
     "index.html": "/glp-rewards-forecaster/index.html",
     "main.e6c13ad2.css.map": "/glp-rewards-forecaster/static/css/main.e6c13ad2.css.map",
-    "main.c3db3a17.js.map": "/glp-rewards-forecaster/static/js/main.c3db3a17.js.map",
+    "main.89d0b5c4.js.map": "/glp-rewards-forecaster/static/js/main.89d0b5c4.js.map",
     "787.2bbe3b88.chunk.js.map": "/glp-rewards-forecaster/static/js/787.2bbe3b88.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.c3db3a17.js"
+    "static/js/main.89d0b5c4.js"
   ]
 }
