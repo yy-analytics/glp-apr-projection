@@ -80,6 +80,11 @@ function App() {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="caption">
+              APR calculated based on 70% of fees being given as rewards.
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="caption">
               * All stats shown are for GLP on the Avalanche network
             </Typography>
           </Grid>
@@ -119,8 +124,8 @@ function App() {
             </BarChart>
           </Grid>
         </Grid>
-      </Container >
-    </ThemeProvider >
+      </Container>
+    </ThemeProvider>
   );
 }
 
