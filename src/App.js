@@ -53,7 +53,16 @@ function App() {
               GLP Rewards Forecaster
             </Typography>
             <Typography variant="caption">
-              A <Link href="https://yieldyak.com/">Yield Yak</Link> community product
+              A <Link href="https://yieldyak.com/" target="_blank" rel="noreferrer">Yield Yak</Link> community product
+            </Typography>
+            <Typography variant="h5" color="orange">
+              Note - due to the deprecation of the hosted service by thegraph.com, this data will no longer be retrievable here.
+            </Typography>
+            <Typography variant="h5">
+              We recommend taking a look at the newly created dashboard for the same information and same calculation method that can be found here (now including Arbitrum GLP APR forecasting also):
+            </Typography>
+            <Typography variant="h5">
+              <Link href="https://dune.com/yield_yak/glp-rewards-forecaster" target="_blank" rel="noreferrer">https://dune.com/yield_yak/glp-rewards-forecaster</Link>
             </Typography>
           </Grid>
           <Grid item xs={12}>
